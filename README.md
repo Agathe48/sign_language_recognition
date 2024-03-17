@@ -1,5 +1,20 @@
 # Sign language recognition
 
+## Table of contents
+
+- [Sign language recognition](#sign-language-recognition)
+  - [Table of contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Todo list](#todo-list)
+  - [Articles](#articles)
+  - [Utilization](#utilization)
+    - [Obtain the database](#obtain-the-database)
+    - [Installing the requirements](#installing-the-requirements)
+    - [Launch the main code](#launch-the-main-code)
+  - [Architecture of this project](#architecture-of-this-project)
+
+## Introduction
+
 ## Todo list
 
 - [ ] écrire l'état de l'art
@@ -21,3 +36,17 @@ https://www.researchgate.net/publication/227166112_Sign_Language_Recognition
 https://ieeexplore.ieee.org/abstract/document/7916786?casa_token=ge_cWHZcE44AAAAA:Eh-wPyn0OtcOEQE3z_Jd4sP78azCBUNQeuqpf_GBNPcWRlaSTRn35v9VFTfS6I6EAOfm2-oaUN0i
 https://ieeexplore.ieee.org/abstract/document/9990643?casa_token=4rPG-1-XEGkAAAAA:6whOuhyMenlHDDZ2x4gAXAyBt_1LjUd6rx3fRs6TuNbBhYwZzjLzjhe_IGpMcDYVfuhKHSqa_G58
 https://ieeexplore.ieee.org/abstract/document/10178445?casa_token=I63VbDp2ZFUAAAAA:ofgAxFaRWliYIDx6hyDdSGtBpCsFBKTz3s72NMKV6CqmhGp297fmn5kJc2mKTLmzhpEetTOhSlWF
+
+## Utilization
+
+### Obtain the database
+
+For this work, we use the train and test set downloadable on this [*Kaggle* notebook](https://www.kaggle.com/datasets/debashishsau/aslamerican-sign-language-aplhabet-dataset?resource=download).
+
+Then we put both folders (train and test set) of the *zip* file on the folder `dataset/`.
+
+### Installing the requirements
+
+### Launch the main code
+
+## Architecture of this project
