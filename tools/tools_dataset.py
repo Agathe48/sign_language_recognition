@@ -66,11 +66,3 @@ def create_test_set():
     test_labels = np.array(test_labels)
 
     return test_images, test_labels
-
-def reduce_size_dataset(train_set, validation_set):
-    print(type(train_set))
-    reduced_train_set = train_set.take(NUMBER_BATCHES_TRAINING)
-    print(type(train_set))
-    reduced_validation_set = validation_set.take(int(NUMBER_BATCHES_TRAINING*0.2))
-
-    return reduced_train_set, reduced_validation_set
