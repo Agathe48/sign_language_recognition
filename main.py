@@ -6,10 +6,6 @@ Main Python file to perform the sign language recognition.
 ### Imports ###
 ###############
 
-### Python imports ###
-
-import tensorflow as tf
-
 ### Local imports ###
 
 from tools.tools_constants import (
@@ -21,8 +17,7 @@ from tools.tools_constants import (
 )
 from tools.tools_dataset import (
     create_train_val_set,
-    create_test_set,
-    reduce_size_dataset
+    create_test_set
 )
 from tools.tools_metrics import (
     analyse_predictions
