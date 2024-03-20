@@ -10,7 +10,8 @@ PATH_DATASET = "dataset/"
 PATH_MODELS = "models/"
 PATH_RESULTS = "results/"
 
-PATH_TRAIN_DATASET = PATH_DATASET + "asl_alphabet_train/"
+PATH_RAW_TRAIN_DATASET = PATH_DATASET + "asl_alphabet_train/"
+PATH_TRAIN_DATASET = PATH_DATASET + "asl_alphabet_train_clean/"
 PATH_TEST_DATASET = PATH_DATASET + "asl_alphabet_test/"
 
 #################

@@ -9,14 +9,20 @@ Tools Python file to perform preprocessing on images.
 ### Python imports ###
 
 import cv2
-import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
-# from rembg import remove 
-from PIL import Image 
+from rembg import remove 
+import os
+from PIL import Image
+import sys
+sys.path.append("./")
   
-
 ### Local imports ###
+
+from tools.tools_constants import (
+    PATH_RAW_TRAIN_DATASET,
+    PATH_TRAIN_DATASET
+)
 
 #################
 ### Functions ###
@@ -35,21 +41,20 @@ def gray_scale(img):
 
 
 def remove_background(folder_path):
-
-    # Store path of the image in the variable input_path 
-    input_path =  file_name
-    
-    # Store path of the output image in the variable output_path 
-    output_path = 'output.png' 
-    
-    # Processing the image 
-    input = Image.open(input_path) 
-    
-    # Removing the background from the given Image 
-    output = remove(input) 
-    
-    #Saving the image in the given path 
-    output.save(output_path) 
+    folder_destination = PATH_TRAIN_DATASET
+    if not os.path.exists(folder_destination):
+        os.makedirs(folder_destination)
+    for folder in os.listdir(folder_path):
+        for file in os.listdir(folder_path + folder):
+            print(folder_path + folder + '/' + file)
+            if file.endswith('.jpg') or file.endswith('.jpeg') or file.endswith('.png'):
+                file_path = folder_path + folder + '/' + file
+                input = Image.open(file_path) 
+                output = remove(input) 
+                if not os.path.exists(folder_destination + '/' + folder):
+                    os.makedirs(folder_destination + '/' + folder)
+                filename, extension = os.path.splitext(file)
+                output.save(folder_destination + '/' + folder + '/' + filename + '.png')
 
 def canny_detector(img, min_threshold, max_threshold, edges = 5):
     # contour detector
@@ -77,3 +82,6 @@ def plot_canny_img(img, img_canny):
     plt.subplot(1,2,2),plt.imshow(img_canny ,cmap = 'gray')
     plt.title('OpenCv Canny'), plt.xticks([]), plt.yticks([])
     plt.show()
+
+if __name__ == "__main__":
+    remove_background(folder_path=PATH_RAW_TRAIN_DATASET)
