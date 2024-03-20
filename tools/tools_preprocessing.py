@@ -14,6 +14,7 @@ import tensorflow as tf
 from rembg import remove 
 import os
 from PIL import Image
+from tqdm import tqdm
 import sys
 sys.path.append("./")
   
@@ -44,9 +45,8 @@ def remove_background(folder_path):
     folder_destination = PATH_TRAIN_DATASET
     if not os.path.exists(folder_destination):
         os.makedirs(folder_destination)
-    for folder in os.listdir(folder_path):
-        for file in os.listdir(folder_path + folder):
-            print(folder_path + folder + '/' + file)
+    for folder in tqdm(os.listdir(folder_path)):
+        for file in tqdm(os.listdir(folder_path + folder)):
             if file.endswith('.jpg') or file.endswith('.jpeg') or file.endswith('.png'):
                 file_path = folder_path + folder + '/' + file
                 input = Image.open(file_path) 
