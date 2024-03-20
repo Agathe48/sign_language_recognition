@@ -51,10 +51,6 @@ train_set, validation_set = normalize_dataset(
     train_set=train_set,
     validation_set=validation_set
 )
-train_set, validation_set = reduce_size_dataset(
-    train_set=train_set,
-    validation_set=validation_set
-)
 
 ### Training ###
 
