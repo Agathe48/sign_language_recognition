@@ -6,13 +6,18 @@ Main Python file to perform the sign language recognition.
 ### Imports ###
 ###############
 
+### Python imports ###
+
+import os
+
 ### Local imports ###
 
 from tools.tools_constants import (
     PATH_MODELS,
     TRAIN_MODE,
     NUMBER_EPOCHS,
-    BATCH_SIZE
+    BATCH_SIZE,
+    PATH_RESULTS
 )
 from tools.tools_dataset import (
     create_train_val_set,
@@ -21,7 +26,8 @@ from tools.tools_dataset import (
 from tools.tools_metrics import (
     analyse_predictions,
     compute_accuracy,
-    display_confusion_matrix
+    display_confusion_matrix,
+    display_training_accuracy
 )
 from tools.tools_models import (
     create_mobilenetv2
@@ -33,6 +39,10 @@ from tools.tools_preprocessing import (
 #################
 ### Main code ###
 #################
+
+isExist = os.path.exists(PATH_RESULTS + 'mobilenetv2/')
+if not isExist:
+    os.makedirs(PATH_RESULTS + 'mobilenetv2/')
 
 ### Data loading ###
 
@@ -54,12 +64,15 @@ model = create_mobilenetv2()
 
 if TRAIN_MODE:
     print("Train model")
-    model_fit = model.fit(
+    history = model.fit(
         train_set,
         batch_size=BATCH_SIZE,
         validation_data=validation_set,
         epochs=NUMBER_EPOCHS,
         verbose=1)
+
+    model_history = history.history
+    display_training_accuracy(model_history)
 
     # Save the weights of the trained model
     print("Save model")
@@ -78,7 +91,9 @@ else:
 print("Predict labels")
 
 predictions = model.predict(test_images)
-predicted_classes_3 = analyse_predictions(predictions=predictions)
+predicted_classes_3 = analyse_predictions(
+    predictions=predictions,
+    number_elements_to_take=3)
 predicted_classes_1 = analyse_predictions(
     predictions=predictions,
     number_elements_to_take=1)
@@ -97,4 +112,3 @@ display_confusion_matrix(
     predicted_labels=[element[0] for element in predicted_classes_1],
     test_labels=test_labels
 )
-
