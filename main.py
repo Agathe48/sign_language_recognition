@@ -12,15 +12,16 @@ from tools.tools_constants import (
     PATH_MODELS,
     TRAIN_MODE,
     NUMBER_EPOCHS,
-    BATCH_SIZE,
-    NUMBER_BATCHES_TRAINING
+    BATCH_SIZE
 )
 from tools.tools_dataset import (
     create_train_val_set,
     create_test_set
 )
 from tools.tools_metrics import (
-    analyse_predictions
+    analyse_predictions,
+    compute_accuracy,
+    display_confusion_matrix
 )
 from tools.tools_models import (
     create_mobilenetv2
@@ -63,23 +64,37 @@ if TRAIN_MODE:
     # Save the weights of the trained model
     print("Save model")
     model.save_weights(
-        PATH_MODELS + 'mobilenetv2/'+ "E" + str(NUMBER_EPOCHS) + "_N" + str(NUMBER_BATCHES_TRAINING) + "/")
+        PATH_MODELS + 'mobilenetv2/'+ "E" + str(NUMBER_EPOCHS) + "/")
 
 else:
     print("Load model")
 
     # Restore the weights
     model.load_weights(
-        PATH_MODELS + 'mobilenetv2/'+ "E" + str(NUMBER_EPOCHS) + "_N" + str(NUMBER_BATCHES_TRAINING) + "/")
+        PATH_MODELS + 'mobilenetv2/'+ "E" + str(NUMBER_EPOCHS) + "/")
 
 ### Predictions ###
 
 print("Predict labels")
 
 predictions = model.predict(test_images)
-predicted_classes = analyse_predictions(predictions=predictions)
-
-print(predicted_classes)
-print(test_labels)
+predicted_classes_3 = analyse_predictions(predictions=predictions)
+predicted_classes_1 = analyse_predictions(
+    predictions=predictions,
+    number_elements_to_take=1)
 
 ### Metrics ###
+
+compute_accuracy(
+    predicted_labels=predicted_classes_3,
+    test_labels=test_labels)
+
+compute_accuracy(
+    predicted_labels=predicted_classes_1,
+    test_labels=test_labels)
+
+display_confusion_matrix(
+    predicted_labels=[element[0] for element in predicted_classes_1],
+    test_labels=test_labels
+)
+

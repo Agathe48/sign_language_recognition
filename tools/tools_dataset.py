@@ -21,8 +21,7 @@ from tools.tools_constants import (
     PATH_TEST_DATASET,
     LIST_LETTERS_STATIC,
     IMAGE_SIZE,
-    BATCH_SIZE,
-    NUMBER_BATCHES_TRAINING
+    BATCH_SIZE
 )
 
 #################
