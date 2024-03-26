@@ -33,7 +33,8 @@ from tools.tools_models import (
     create_mobilenetv2
 )
 from tools.tools_preprocessing import (
-    normalize_dataset
+    normalize_dataset, 
+    extract_contours
 )
 
 #################
@@ -56,6 +57,11 @@ test_images, test_labels = create_test_set()
 train_set, validation_set = normalize_dataset(
     train_set=train_set,
     validation_set=validation_set
+)
+
+train_set, validation_set = extract_contours(
+    train_set = train_set,
+    validation_set = validation_set
 )
 
 ### Training ###

@@ -82,5 +82,20 @@ def plot_canny_img(img, img_canny):
     plt.title('OpenCv Canny'), plt.xticks([]), plt.yticks([])
     plt.show()
 
+
+def extract_contours(train_set, validation_set):
+    """
+    Preprocessing pipeline to extract contours from an image.
+    """
+    # gray dataset
+    gray_train_set = train_set.map(lambda x, y: (gray_scale(x), y))
+    gray_val_set = validation_set.map(lambda x, y: (gray_scale(x), y))
+    # canny dataset
+    canny_train_set = gray_train_set.map(lambda x, y: (canny_detector(img = x, min_threshold = 40, max_threshold = 100), y))
+    canny_val_set = gray_val_set.map(lambda x, y: (canny_detector(img = x, min_threshold = 40, max_threshold = 100), y))
+
+    return canny_train_set, canny_val_set
+
+
 if __name__ == "__main__":
     remove_background(folder_path=PATH_RAW_SHORT_TRAIN_DATASET)
