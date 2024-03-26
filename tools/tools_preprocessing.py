@@ -40,7 +40,6 @@ def gray_scale(img):
     img_gray= cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
     return img_gray
 
-
 def remove_background(folder_path):
     folder_destination = PATH_TRAIN_DATASET
     if not os.path.exists(folder_destination):

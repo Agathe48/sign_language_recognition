@@ -21,8 +21,7 @@ from tools.tools_constants import (
     PATH_TEST_DATASET,
     LIST_LETTERS_STATIC,
     IMAGE_SIZE,
-    BATCH_SIZE,
-    NUMBER_BATCHES_TRAINING
+    BATCH_SIZE
 )
 
 #################
@@ -46,9 +45,7 @@ def create_test_set():
     test_labels = []
 
     for image_file in tqdm(os.listdir(PATH_TEST_DATASET)):
-        type_image = image_file.replace("_test.jpg", "")
-        type_image = type_image.replace("_test.jpeg", "")
-        type_image = type_image.replace("_test.png", "")
+        type_image = image_file[0]
 
         if type_image in LIST_LETTERS_STATIC:
             image = cv2.imread(PATH_TEST_DATASET + image_file)

@@ -45,6 +45,9 @@ For this work, we use the train and test set downloadable on this [*Kaggle* note
 
 Then we put both folders (train and test set) of the *zip* file on the folder `dataset/`.
 
+Larger test dataset:
+https://public.roboflow.com/object-detection/american-sign-language-letters/1
+
 ### Installing the requirements
 
 ### Launch the main code
