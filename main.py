@@ -17,7 +17,9 @@ from tools.tools_constants import (
     TRAIN_MODE,
     NUMBER_EPOCHS,
     BATCH_SIZE,
-    PATH_RESULTS
+    PATH_RESULTS,
+    MODEL_NAME,
+    BOOL_PREPROCESSING_CONTOURS
 )
 from tools.tools_dataset import (
     create_train_val_set,
@@ -30,10 +32,11 @@ from tools.tools_metrics import (
     display_training_accuracy
 )
 from tools.tools_models import (
-    create_mobilenetv2
+    create_mobilenetv2,
+    create_cnn
 )
 from tools.tools_preprocessing import (
-    normalize_dataset, 
+    normalize_dataset,
     extract_contours
 )
 
@@ -59,14 +62,22 @@ train_set, validation_set = normalize_dataset(
     validation_set=validation_set
 )
 
-train_set, validation_set = extract_contours(
-    train_set = train_set,
-    validation_set = validation_set
-)
+if BOOL_PREPROCESSING_CONTOURS:
+    train_set, validation_set = extract_contours(
+        train_set=train_set,
+        validation_set=validation_set
+    )
 
 ### Training ###
 
-model = create_mobilenetv2()
+if MODEL_NAME == "mobilenetv2":
+    model = create_mobilenetv2()
+elif MODEL_NAME == "cnn":
+    model = create_cnn()
+
+path_to_save = PATH_MODELS + MODEL_NAME + '/E'+ str(NUMBER_EPOCHS)
+if BOOL_PREPROCESSING_CONTOURS:
+    path_to_save += "_contours"
 
 if TRAIN_MODE:
     print("Train model")
@@ -78,19 +89,16 @@ if TRAIN_MODE:
         verbose=1)
 
     model_history = history.history
-    display_training_accuracy(model_history)
+    display_training_accuracy(model_history, path_to_save)
 
     # Save the weights of the trained model
     print("Save model")
-    model.save_weights(
-        PATH_MODELS + 'mobilenetv2/'+ "E" + str(NUMBER_EPOCHS) + "/")
+    model.save_weights(path_to_save + "/")
 
 else:
-    print("Load model")
-
     # Restore the weights
-    model.load_weights(
-        PATH_MODELS + 'mobilenetv2/'+ "E" + str(NUMBER_EPOCHS) + "/")
+    print("Load model")
+    model.load_weights(path_to_save + "/")
 
 ### Predictions ###
 
@@ -116,5 +124,6 @@ compute_accuracy(
 
 display_confusion_matrix(
     predicted_labels=[element[0] for element in predicted_classes_1],
-    test_labels=test_labels
+    test_labels=test_labels,
+    path_to_save=path_to_save
 )

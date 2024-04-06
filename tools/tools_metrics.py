@@ -18,6 +18,7 @@ import seaborn as sns
 from tools.tools_constants import (
     LIST_LETTERS_STATIC,
     PATH_RESULTS,
+    PATH_MODELS,
     NUMBER_EPOCHS
 )
 
@@ -49,21 +50,20 @@ def compute_accuracy(predicted_labels, test_labels):
     print(accuracy)
     return accuracy
 
-def display_confusion_matrix(predicted_labels, test_labels):
+def display_confusion_matrix(predicted_labels, test_labels, path_to_save):
     confusion_matrix = metrics.confusion_matrix(test_labels, predicted_labels)
-    # cm_display = metrics.ConfusionMatrixDisplay(confusion_matrix = confusion_matrix, display_labels = LIST_LETTERS_STATIC)
-    # cm_display.plot()
 
     cm_display = confusion_matrix.astype('float') / confusion_matrix.sum(axis=1)[:, np.newaxis]
     fig, ax = plt.subplots(figsize=(15, 10))
-    # plt.figure(figsize=(25, 15))
     sns.heatmap(cm_display, annot=True, fmt='.2f', xticklabels=LIST_LETTERS_STATIC, yticklabels=LIST_LETTERS_STATIC)
     plt.ylabel('Actual')
     plt.xlabel('Predicted')
 
-    plt.savefig(PATH_RESULTS + 'mobilenetv2/'+ "E" + str(NUMBER_EPOCHS) + "_confusion_matrix.png")
+    path_to_save = path_to_save.replace(PATH_MODELS, PATH_RESULTS)
+    path_to_save += "_confusion_matrix.png"
+    plt.savefig(path_to_save)
 
-def display_training_accuracy(model_history):
+def display_training_accuracy(model_history, path_to_save):
     plt.plot(model_history['accuracy'])
     plt.plot(model_history['val_accuracy'])
     plt.title('MobileNetV2 Accuracy')
@@ -71,4 +71,6 @@ def display_training_accuracy(model_history):
     plt.xlabel('Epoch')
     plt.legend(['Train', 'Validation'], loc='upper left')
 
-    plt.savefig(PATH_RESULTS + 'mobilenetv2/'+ "E" + str(NUMBER_EPOCHS) + "_accuracy.png")
+    path_to_save = path_to_save.replace(PATH_MODELS, PATH_RESULTS)
+    path_to_save += "_accuracy.png"
+    plt.savefig(path_to_save)
