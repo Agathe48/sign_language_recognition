@@ -22,7 +22,9 @@ sys.path.append("./")
 
 from tools.tools_constants import (
     PATH_RAW_SHORT_TRAIN_DATASET,
-    PATH_TRAIN_DATASET
+    PATH_TRAIN_DATASET,
+    PATH_TEST_DATASET,
+    PATH_RAW_TEST_DATASET
 )
 
 #################
@@ -36,24 +38,42 @@ def normalize_dataset(train_set, validation_set):
 
     return normalized_train_set, normalized_val_set
 
+def loadImage(src, show = True):
+    img=cv2.imread(src,1)
+    rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    if show : 
+        plt.imshow(rgb,interpolation='nearest')
+        plt.show()
+    return rgb
+
 def gray_scale(img):
     img_gray= cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
     return img_gray
 
-def remove_background(folder_path):
-    folder_destination = PATH_TRAIN_DATASET
+def remove_background(folder_path, folder_destination, file_mode=True):
     if not os.path.exists(folder_destination):
         os.makedirs(folder_destination)
-    for folder in tqdm(os.listdir(folder_path)):
-        for file in tqdm(os.listdir(folder_path + folder)):
+    if not file_mode:
+        for folder in tqdm(os.listdir(folder_path)):
+            for file in tqdm(os.listdir(folder_path + folder)):
+                if file.endswith('.jpg') or file.endswith('.jpeg') or file.endswith('.png'):
+                    file_path = folder_path + folder + '/' + file
+                    input = Image.open(file_path) 
+                    output = remove(input) 
+                    if not os.path.exists(folder_destination + '/' + folder):
+                        os.makedirs(folder_destination + '/' + folder)
+                    filename, extension = os.path.splitext(file)
+                    output.save(folder_destination + '/' + folder + '/' + filename + '.png')
+    else:
+        for file in tqdm(os.listdir(folder_path)):
             if file.endswith('.jpg') or file.endswith('.jpeg') or file.endswith('.png'):
-                file_path = folder_path + folder + '/' + file
+                file_path = folder_path + file
                 input = Image.open(file_path) 
                 output = remove(input) 
-                if not os.path.exists(folder_destination + '/' + folder):
-                    os.makedirs(folder_destination + '/' + folder)
+                if not os.path.exists(folder_destination):
+                    os.makedirs(folder_destination)
                 filename, extension = os.path.splitext(file)
-                output.save(folder_destination + '/' + folder + '/' + filename + '.png')
+                output.save(folder_destination + filename + '.png')
 
 def canny_detector(img, min_threshold, max_threshold, edges = 5):
     # contour detector
@@ -88,8 +108,8 @@ def extract_contours(train_set, validation_set):
     Preprocessing pipeline to extract contours from an image.
     """
     # gray dataset
-    gray_train_set = train_set.map(lambda x, y: (gray_scale(x), y))
-    gray_val_set = validation_set.map(lambda x, y: (gray_scale(x), y))
+    gray_train_set = train_set.map(lambda x, y: (gray_scale(loadImage(src=x, show=False)), y))
+    gray_val_set = validation_set.map(lambda x, y: (gray_scale(loadImage(src=x, show=False)), y))
     # canny dataset
     canny_train_set = gray_train_set.map(lambda x, y: (canny_detector(img = x, min_threshold = 40, max_threshold = 100), y))
     canny_val_set = gray_val_set.map(lambda x, y: (canny_detector(img = x, min_threshold = 40, max_threshold = 100), y))
@@ -98,4 +118,7 @@ def extract_contours(train_set, validation_set):
 
 
 if __name__ == "__main__":
-    remove_background(folder_path=PATH_RAW_SHORT_TRAIN_DATASET)
+    remove_background(
+        folder_path=PATH_RAW_TEST_DATASET,
+        folder_destination=PATH_TEST_DATASET,
+        file_mode=True)

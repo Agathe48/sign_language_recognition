@@ -13,7 +13,8 @@ PATH_RESULTS = "results/"
 PATH_RAW_TRAIN_DATASET = PATH_DATASET + "asl_alphabet_train/"
 PATH_RAW_SHORT_TRAIN_DATASET = PATH_DATASET + "asl_alphabet_train_short/"
 PATH_TRAIN_DATASET = PATH_DATASET + "asl_alphabet_train_clean/"
-PATH_TEST_DATASET = PATH_DATASET + "asl_alphabet_test/"
+PATH_TEST_DATASET = PATH_DATASET + "asl_alphabet_test_clean/"
+PATH_RAW_TEST_DATASET = PATH_DATASET + "asl_alphabet_test/"
 
 #################
 ### Constants ###
@@ -29,5 +30,5 @@ BATCH_SIZE = 32
 
 MODEL_NAME = "mobilenetv2" # mobilenetv2
 TRAIN_MODE = True
-NUMBER_EPOCHS = 10
+NUMBER_EPOCHS = 3
 BOOL_PREPROCESSING_CONTOURS = False
