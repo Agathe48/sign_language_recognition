@@ -22,8 +22,8 @@ from tools.tools_constants import (
     BOOL_PREPROCESSING_CONTOURS
 )
 from tools.tools_dataset import (
-    create_train_val_set,
-    create_test_set
+    create_test_set,
+    create_train_val_set_image_per_image
 )
 from tools.tools_metrics import (
     analyse_predictions,
@@ -35,10 +35,6 @@ from tools.tools_models import (
     create_mobilenetv2,
     create_cnn
 )
-from tools.tools_preprocessing import (
-    normalize_dataset,
-    extract_contours
-)
 
 #################
 ### Main code ###
@@ -48,25 +44,12 @@ isExist = os.path.exists(PATH_RESULTS + 'mobilenetv2/')
 if not isExist:
     os.makedirs(PATH_RESULTS + 'mobilenetv2/')
 
-### Data loading ###
+### Data loading and preprocessing ###
 
-print("Load dataset")
+print("Load dataset and preprocess images")
 
-train_set, validation_set = create_train_val_set()
+train_images, train_labels, validation_images, validation_labels = create_train_val_set_image_per_image()
 test_images, test_labels = create_test_set()
-
-### Preprocessing ###
-
-train_set, validation_set = normalize_dataset(
-    train_set=train_set,
-    validation_set=validation_set
-)
-
-if BOOL_PREPROCESSING_CONTOURS:
-    train_set, validation_set = extract_contours(
-        train_set=train_set,
-        validation_set=validation_set
-    )
 
 ### Training ###
 
@@ -82,9 +65,9 @@ if BOOL_PREPROCESSING_CONTOURS:
 if TRAIN_MODE:
     print("Train model")
     history = model.fit(
-        train_set,
+        train_images, train_labels,
         batch_size=BATCH_SIZE,
-        validation_data=validation_set,
+        validation_data=(validation_images, validation_labels),
         epochs=NUMBER_EPOCHS,
         verbose=1)
 
