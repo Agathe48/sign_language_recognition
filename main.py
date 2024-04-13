@@ -19,7 +19,8 @@ from tools.tools_constants import (
     BATCH_SIZE,
     PATH_RESULTS,
     MODEL_NAME,
-    BOOL_PREPROCESSING_CONTOURS
+    BOOL_PREPROCESSING_CONTOURS,
+    BOOL_PREPROCESSING_BACKGROUND
 )
 from tools.tools_dataset import (
     create_train_val_test_set
@@ -57,6 +58,8 @@ elif MODEL_NAME == "cnn":
     model = create_cnn()
 
 path_to_save = PATH_MODELS + MODEL_NAME + '/E'+ str(NUMBER_EPOCHS)
+if not BOOL_PREPROCESSING_BACKGROUND:
+    path_to_save += "_background"
 if BOOL_PREPROCESSING_CONTOURS:
     path_to_save += "_contours"
 

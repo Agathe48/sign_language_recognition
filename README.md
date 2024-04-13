@@ -58,11 +58,19 @@ https://public.roboflow.com/object-detection/american-sign-language-letters/1
 ### Results
 
 MobileNetV2, 3 époques, contours : 61% d'accuracy, 83% d'accuracy sur 3
-MobileNetV2, 3 époques, contours, HSV : xx% d'accuracy, xx% d'accuracy sur 3
+MobileNetV2, 3 époques, contours, HSV : 57% d'accuracy, 77% d'accuracy sur 3
 MobileNetV2, 3 époques, sans contours : 39% d'accuracy, 69% d'accuracy sur 3
 MobileNetV2, 3 époques, sans contours, HSV : 48% d'accuracy, 73% d'accuracy sur 3
 MobileNetV2, 6 époques, contours : 69% d'accuracy, 88% d'accuracy sur 3
 MobileNetV2, 8 époques, contours : 71% d'accuracy, 88% d'accuracy sur 3
+MobileNetV2, 8 époques, sans contours, HSV : 51% d'accuracy, 78% d'accuracy sur 3
+MobileNetV2, 8 époques, contours, HSV : 64% d'accuracy, 82% d'accuracy sur 3
 MobileNetV2, 10 époques, contours : 70% d'accuracy, 88% d'accuracy sur 3
+MobileNetV2, 10 époques, contours, HSV : 64% d'accuracy, 83% d'accuracy sur 3
+MobileNetV2, 10 époques, sans contours, HSV : 51% d'accuracy, 76% d'accuracy sur 3
+
+
+
+
 
 CNN, 3 époques, contours : 47% d'accuracy, 69% d'accuracy sur 3
