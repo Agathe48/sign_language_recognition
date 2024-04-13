@@ -12,8 +12,9 @@ PATH_RESULTS = "results/"
 
 PATH_RAW_TRAIN_DATASET = PATH_DATASET + "asl_alphabet_train/"
 PATH_RAW_SHORT_TRAIN_DATASET = PATH_DATASET + "asl_alphabet_train_short/"
-PATH_TRAIN_DATASET = PATH_DATASET + "asl_alphabet_train_clean/"
-PATH_TEST_DATASET = PATH_DATASET + "asl_alphabet_test_clean/"
+PATH_TRAIN_DATASET = PATH_DATASET + "train/"
+PATH_VALID_DATASET = PATH_DATASET + "valid/"
+PATH_TEST_DATASET = PATH_DATASET + "test/"
 PATH_RAW_TEST_DATASET = PATH_DATASET + "asl_alphabet_test/"
 
 #################
