@@ -22,8 +22,7 @@ from tools.tools_constants import (
     BOOL_PREPROCESSING_CONTOURS
 )
 from tools.tools_dataset import (
-    create_test_set,
-    create_train_val_set_image_per_image
+    create_train_val_test_set
 )
 from tools.tools_metrics import (
     analyse_predictions,
@@ -40,16 +39,15 @@ from tools.tools_models import (
 ### Main code ###
 #################
 
-isExist = os.path.exists(PATH_RESULTS + 'mobilenetv2/')
+isExist = os.path.exists(PATH_RESULTS + MODEL_NAME + "/")
 if not isExist:
-    os.makedirs(PATH_RESULTS + 'mobilenetv2/')
+    os.makedirs(PATH_RESULTS + MODEL_NAME + "/")
 
 ### Data loading and preprocessing ###
 
 print("Load dataset and preprocess images")
 
-train_images, train_labels, validation_images, validation_labels = create_train_val_set_image_per_image()
-test_images, test_labels = create_test_set()
+train_images, train_labels, validation_images, validation_labels, test_images, test_labels = create_train_val_test_set()
 
 ### Training ###
 

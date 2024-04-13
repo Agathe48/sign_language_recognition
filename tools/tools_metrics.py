@@ -18,8 +18,7 @@ import seaborn as sns
 from tools.tools_constants import (
     LIST_LETTERS_STATIC,
     PATH_RESULTS,
-    PATH_MODELS,
-    NUMBER_EPOCHS
+    PATH_MODELS
 )
 
 #################
@@ -35,13 +34,14 @@ def analyse_predictions(predictions, number_elements_to_take=3):
 
         list_predicted_letters = [LIST_LETTERS_STATIC[id] for id in first_elements]
         predicted_labels.append(list_predicted_letters)
-    
     return predicted_labels
 
 def compute_accuracy(predicted_labels, test_labels):
     score = 0
     for counter in range(len(test_labels)):
-        type_image = test_labels[counter]
+        label_image = test_labels[counter]
+        index_truth = np.argwhere(label_image == 1)[0][0]
+        type_image = LIST_LETTERS_STATIC[index_truth]
         if type_image in predicted_labels[counter]:
             score += 1
     accuracy = score / len(test_labels)
@@ -51,7 +51,9 @@ def compute_accuracy(predicted_labels, test_labels):
     return accuracy
 
 def display_confusion_matrix(predicted_labels, test_labels, path_to_save):
-    confusion_matrix = metrics.confusion_matrix(test_labels, predicted_labels)
+    test_types = [LIST_LETTERS_STATIC[
+        np.argwhere(label_image == 1)[0][0]] for label_image in test_labels]
+    confusion_matrix = metrics.confusion_matrix(test_types, predicted_labels)
 
     cm_display = confusion_matrix.astype('float') / confusion_matrix.sum(axis=1)[:, np.newaxis]
     fig, ax = plt.subplots(figsize=(15, 10))

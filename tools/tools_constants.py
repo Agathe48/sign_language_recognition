@@ -12,10 +12,10 @@ PATH_RESULTS = "results/"
 
 PATH_RAW_TRAIN_DATASET = PATH_DATASET + "asl_alphabet_train/"
 PATH_RAW_SHORT_TRAIN_DATASET = PATH_DATASET + "asl_alphabet_train_short/"
+PATH_RAW_TEST_DATASET = PATH_DATASET + "asl_alphabet_test/"
 PATH_TRAIN_DATASET = PATH_DATASET + "train/"
 PATH_VALID_DATASET = PATH_DATASET + "valid/"
 PATH_TEST_DATASET = PATH_DATASET + "test/"
-PATH_RAW_TEST_DATASET = PATH_DATASET + "asl_alphabet_test/"
 
 #################
 ### Constants ###
@@ -30,6 +30,6 @@ IMAGE_SIZE = (224, 224)
 BATCH_SIZE = 32
 
 MODEL_NAME = "mobilenetv2" # mobilenetv2 cnn
-TRAIN_MODE = True
+TRAIN_MODE = False
 NUMBER_EPOCHS = 3
-BOOL_PREPROCESSING_CONTOURS = True
+BOOL_PREPROCESSING_CONTOURS = False
