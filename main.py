@@ -20,7 +20,8 @@ from tools.tools_constants import (
     PATH_RESULTS,
     MODEL_NAME,
     BOOL_PREPROCESSING_CONTOURS,
-    BOOL_PREPROCESSING_BACKGROUND
+    BOOL_PREPROCESSING_BACKGROUND,
+    BOOL_HSV
 )
 from tools.tools_dataset import (
     create_train_val_test_set
@@ -62,6 +63,8 @@ if not BOOL_PREPROCESSING_BACKGROUND:
     path_to_save += "_background"
 if BOOL_PREPROCESSING_CONTOURS:
     path_to_save += "_contours"
+if BOOL_HSV:
+    path_to_save += "_hsv"
 
 if TRAIN_MODE:
     print("Train model")

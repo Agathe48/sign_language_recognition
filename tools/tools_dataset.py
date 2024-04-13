@@ -22,7 +22,8 @@ from tools.tools_constants import (
     LIST_LETTERS_STATIC,
     IMAGE_SIZE,
     TRAIN_MODE,
-    BOOL_PREPROCESSING_CONTOURS
+    BOOL_PREPROCESSING_CONTOURS,
+    BOOL_HSV
 )
 from tools.tools_preprocessing import (
     cv2_extract_contours
@@ -66,7 +67,8 @@ def create_train_val_test_set():
 
                 # Get the RGB colors
                 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-
+                if BOOL_HSV:
+                    image = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
                 # Crop the image
                 image = cv2.resize(image, IMAGE_SIZE)
                 new_image = image
