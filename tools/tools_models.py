@@ -16,6 +16,7 @@ from keras.layers import Dense, Flatten, Conv2D, MaxPool2D, Dropout
 ### Local imports ###
 
 from tools.tools_constants import (
+    BOOL_PREPROCESSING_CONTOURS,
     LIST_LETTERS_STATIC
 )
 
@@ -25,7 +26,9 @@ from tools.tools_constants import (
 
 def create_mobilenetv2(number_classes=len(LIST_LETTERS_STATIC)):
     mobilenet_v2 = "https://tfhub.dev/google/tf2-preview/mobilenet_v2/feature_vector/4"
-    mobile_net_layers = hub.KerasLayer(mobilenet_v2, input_shape=(224,224,3))
+    input_shape = (224, 224, 3)
+    mobile_net_layers = hub.KerasLayer(
+        mobilenet_v2, input_shape=input_shape)
 
     # Do not change the weights of MobileNetV2 during training
     mobile_net_layers.trainable = False

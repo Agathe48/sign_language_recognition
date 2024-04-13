@@ -17,6 +17,7 @@ from PIL import Image
 from tqdm import tqdm
 import sys
 sys.path.append("./")
+import numpy as np
   
 ### Local imports ###
 
@@ -102,19 +103,34 @@ def plot_canny_img(img, img_canny):
     plt.title('OpenCv Canny'), plt.xticks([]), plt.yticks([])
     plt.show()
 
+def cv2_extract_contours(image):
+    image = gray_scale(image)
+    image = canny_detector(image, min_threshold = 40, max_threshold = 100)
+    return image
 
-def extract_contours(train_set, validation_set):
+def extract_contours(train_images, validation_images):
     """
     Preprocessing pipeline to extract contours from an image.
     """
     # gray dataset
-    gray_train_set = train_set.map(lambda x, y: (gray_scale(loadImage(src=x, show=False)), y))
-    gray_val_set = validation_set.map(lambda x, y: (gray_scale(loadImage(src=x, show=False)), y))
+    # gray_train_set = train_set.map(lambda x, y: (gray_scale(cv2.cvtColor(np.array(x, dtype="uint8")), cv2.COLOR_BGR2RGB), y))
+    # gray_val_set = validation_set.map(lambda x, y: (gray_scale(cv2.cvtColor(np.array(x, dtype="uint8")), cv2.COLOR_BGR2RGB), y))
     # canny dataset
-    canny_train_set = gray_train_set.map(lambda x, y: (canny_detector(img = x, min_threshold = 40, max_threshold = 100), y))
-    canny_val_set = gray_val_set.map(lambda x, y: (canny_detector(img = x, min_threshold = 40, max_threshold = 100), y))
+    # canny_train_set = gray_train_set.map(lambda x, y: (canny_detector(img = x, min_threshold = 40, max_threshold = 100), y))
+    # canny_val_set = gray_val_set.map(lambda x, y: (canny_detector(img = x, min_threshold = 40, max_threshold = 100), y))
 
-    return canny_train_set, canny_val_set
+    # canny_train_set = train_set.map(lambda x, y: (canny_detector(img = x.numpy(), min_threshold = 40, max_threshold = 100), y))
+    # canny_val_set = validation_set.map(lambda x, y: (canny_detector(img = x.numpy(), min_threshold = 40, max_threshold = 100), y))  
+
+    canny_train_images = []
+    canny_val_images = []
+
+    for element in tqdm(train_images):
+        canny_train_images.append(cv2_extract_contours(element))
+    for element in tqdm(validation_images):
+        canny_val_images.append(cv2_extract_contours(element))
+
+    return np.array(canny_train_images), np.array(canny_val_images)
 
 
 if __name__ == "__main__":
