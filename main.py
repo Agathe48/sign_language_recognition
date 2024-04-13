@@ -8,6 +8,7 @@ Main Python file to perform the sign language recognition.
 
 ### Python imports ###
 
+from ctypes.wintypes import BOOL
 import os
 
 ### Local imports ###
@@ -19,7 +20,8 @@ from tools.tools_constants import (
     BATCH_SIZE,
     PATH_RESULTS,
     MODEL_NAME,
-    BOOL_PREPROCESSING_CONTOURS
+    BOOL_PREPROCESSING_CONTOURS,
+    BOOL_HSV
 )
 from tools.tools_dataset import (
     create_train_val_test_set
@@ -59,6 +61,8 @@ elif MODEL_NAME == "cnn":
 path_to_save = PATH_MODELS + MODEL_NAME + '/E'+ str(NUMBER_EPOCHS)
 if BOOL_PREPROCESSING_CONTOURS:
     path_to_save += "_contours"
+if BOOL_HSV:
+    path_to_save += "_hsv"
 
 if TRAIN_MODE:
     print("Train model")
