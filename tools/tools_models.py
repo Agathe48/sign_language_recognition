@@ -16,7 +16,6 @@ from keras.layers import Dense, Flatten, Conv2D, MaxPool2D, Dropout
 ### Local imports ###
 
 from tools.tools_constants import (
-    BOOL_PREPROCESSING_CONTOURS,
     LIST_LETTERS_STATIC
 )
 
