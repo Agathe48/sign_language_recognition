@@ -7,9 +7,12 @@ from tools.tools_constants import (
 )
 
 NB_LETTERS = 5
-TIME_REDUCE = 1
-START_OFFSET = 5
-print("AAAAAAAAAAAAAAAA")
+TIME_REDUCE = 0.87 # 0.87
+START_OFFSET = 3 # 3
+PATH_FRAMES_VIDEO_SUBFOLDER = PATH_FRAMES_VIDEO + "offset_" + str(START_OFFSET) + "_time_reduce_" + (str(TIME_REDUCE)).replace("0.","") + "/"
+if not os.path.exists(PATH_FRAMES_VIDEO_SUBFOLDER):
+    os.mkdir(PATH_FRAMES_VIDEO_SUBFOLDER)
+
 def split_video_word_on_letters(idx,word):
     
     # Load the video
@@ -34,7 +37,7 @@ def split_video_word_on_letters(idx,word):
     time_split = int(useful_frames*TIME_REDUCE/NB_LETTERS)
 
     # Create folder for letters
-    path_letters_video = PATH_FRAMES_VIDEO + word + "/"
+    path_letters_video = PATH_FRAMES_VIDEO_SUBFOLDER + str(idx) + '_' + word + "/"
     if not os.path.exists(path_letters_video):
         os.mkdir(path_letters_video)
 
