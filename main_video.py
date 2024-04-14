@@ -10,6 +10,7 @@ from rembg import remove
 
 from tools.tools_constants import (
     PATH_MODELS,
+    FIVE_LETTERS_WORDS_LIST,
     MODEL_NAME,
     NUMBER_EPOCHS,
     BOOL_PREPROCESSING_BACKGROUND,
@@ -30,7 +31,8 @@ from tools.tools_metrics import (
     analyse_predictions_probabilities
 )
 from tools.tools_preprocessing import (
-    canny_detector
+    canny_detector,
+    loadImage
 )
 
 if BOOL_TENSORFLOW:
@@ -105,33 +107,79 @@ def split_letters_for_videos_in_csv(path_csv):
             if idx >= 1:
                 break
 
-split_letters_for_videos_in_csv(PATH_LIST_WORDS_CLEAN)
+# split_letters_for_videos_in_csv(PATH_LIST_WORDS_CLEAN)
 
-
-PATH_ENGLISH_WORDS = "english_words_280k.txt"
-
-def get_5_words_list():
-    five_words_list = []
-    with open(PATH_ENGLISH_WORDS,"r") as file:
-        for line in file:
-            line = line.replace("\n","")
-            if len(line) == 5:
-                five_words_list.append(line)
-    return five_words_list
-
-FIVE_WORDS_LIST = get_5_words_list()
-
-def predict_word_with_proba(proba_list,letters_list, nb_words_to_keep):
-    score_array = np.zeros(len(FIVE_WORDS_LIST))
-    for i in range(len(proba_list)):
-        for word_id,word in enumerate(FIVE_WORDS_LIST):
-            if word[i] == letters_list[i]:
-                score_array[word_id] += proba_list[i]
-    best_scores_id = np.argsort(score_array)[:nb_words_to_keep]
+def predict_word_with_proba(proba_array, letters_array, nb_words_to_keep):
+    score_array = np.zeros(len(FIVE_LETTERS_WORDS_LIST))
+    for i in range(len(proba_array)): # ID de la lettre
+        for j in range(len(proba_array[0])): # Rang de probabilité
+            for word_id, word in enumerate(FIVE_LETTERS_WORDS_LIST):
+                if word[i] == letters_array[i][j].lower():
+                    score_array[word_id] += proba_array[i][j]
+    best_scores_id = np.argsort(score_array)[::-1][:nb_words_to_keep]
     best_scores = score_array[best_scores_id]
     best_words = []
     for best_id in best_scores_id:
-        best_words.append(FIVE_WORDS_LIST[best_id])
+        best_words.append(FIVE_LETTERS_WORDS_LIST[best_id])
     
     return best_words, best_scores
 
+
+def predict_word(idx, word):
+    print("NEW WORD", word)
+
+    path_word_letters_images = PATH_FRAMES_VIDEO + "offset_3_time_reduce_87/" + str(idx) + "_" + word + "/"
+    list_predicted_letters = []
+    list_predicted_probas = []
+    
+    for counter_letter in range(5):
+        # Open image
+        image = loadImage(path_word_letters_images + f"{counter_letter}_{word[counter_letter]}.png", show = False)
+        
+        width = image.shape[0]
+        height = image.shape[1]
+        width_to_crop = int((height-width)/2)
+
+        # Resizing and cropping
+        image = image[:, width_to_crop:height+width_to_crop]
+        image = cv2.resize(image, IMAGE_SIZE)
+
+        # Remove background
+        image = remove(image)
+        new_image = image
+        if BOOL_PREPROCESSING_CONTOURS:
+            # Detect contours
+            image = canny_detector(image)
+            cv2.imwrite("toto.png", image)
+            new_image = np.zeros((224, 224, 3))
+            for i in range(3):
+                new_image[:,:,i] = image
+
+        new_image = np.array(new_image, dtype="float") / 255.0
+        new_image = np.expand_dims(new_image, axis=0)
+        if BOOL_TENSORFLOW:
+            predictions = model.predict(new_image)
+            predicted_labels, predicted_probas = analyse_predictions_probabilities(
+                prediction=predictions[0],
+                number_elements_to_take=5)
+            list_predicted_letters.append(predicted_labels)
+            list_predicted_probas.append(predicted_probas)
+            # print("AAAAAAAAAAA ", predicted_labels)
+            print("Most probable letter ", counter_letter, " : ", predicted_labels, " with proba ", predicted_probas)
+
+    best_words, best_scores = predict_word_with_proba(
+        proba_array=list_predicted_probas,
+        letters_array=list_predicted_letters,
+        nb_words_to_keep=10
+    )
+    return best_words, best_scores
+
+with open(PATH_LIST_WORDS_CLEAN,"r") as file:
+    for line in file:
+        idx, word  = line.replace("\n","").split(",")
+        idx = int(idx)
+        best_words, best_scores = predict_word(idx, word)
+        if word in best_words:
+            print("\n", "--- VICTOIRE", word, best_words, best_scores, "\n")
+        if idx == 5:
+            break
