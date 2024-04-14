@@ -33,8 +33,9 @@ PATH_RAW_VIDEO = PATH_DATASET + "Finger_spelling_ASL.mp4"
 PATH_VIDEOS = PATH_DATASET + "video_words/"
 PATH_LIST_WORDS = PATH_DATASET + "list_words_video.txt"
 PATH_LIST_WORDS_CLEAN = PATH_DATASET + "list_words_video_clean.csv"
-
 PATH_FRAMES_VIDEO = PATH_DATASET + "frames_video/"
+
+PATH_ENGLISH_WORDS = PATH_DATASET + "english_words_10k.txt"
 
 #################
 ### Constants ###
@@ -53,7 +54,20 @@ IMAGE_SIZE = (224, 224)
 BATCH_SIZE = 32
 
 MODEL_NAME = "mobilenetv2" # mobilenetv2 cnn
-TRAIN_MODE = False
-NUMBER_EPOCHS = 8
+TRAIN_MODE = True
+NUMBER_EPOCHS = 3
 BOOL_PREPROCESSING_CONTOURS = True
 BOOL_HSV = False
+BOOL_XYZ = False
+BOOL_LAB = True
+
+def get_5_words_list():
+    five_words_list = []
+    with open(PATH_ENGLISH_WORDS,"r") as file:
+        for line in file:
+            line = line.replace("\n","")
+            if len(line) == 5:
+                five_words_list.append(line)
+    return five_words_list
+
+FIVE_LETTERS_WORDS_LIST = get_5_words_list()
