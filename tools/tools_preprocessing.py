@@ -36,7 +36,7 @@ def normalize_dataset(train_set, validation_set):
 
     return normalized_train_set, normalized_val_set
 
-def loadImage(src, show = True):
+def load_image(src, show = True):
     img=cv2.imread(src,1)
     rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     if show : 
@@ -47,6 +47,13 @@ def loadImage(src, show = True):
 def gray_scale(img):
     img_gray= cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
     return img_gray
+
+def calcul_histogram(I,color):
+    for i,col in enumerate(color):
+        histr = cv2.calcHist([I],[i],None,[256],[0,256])
+        plt.plot(histr,color = col)
+        plt.xlim([0,256])
+    plt.show()
 
 def remove_background(folder_path, folder_destination, file_mode=True):
     if not os.path.exists(folder_destination):
