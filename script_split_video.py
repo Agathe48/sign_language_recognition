@@ -55,22 +55,11 @@ hand_disappeared = False
 video_number = 0
 video = None
 
-# split the video and save the videos when there is no hand (aka we see the shirt hence more blue pixels)
-
-reference_pause = 0
-counter_frame = 0
 bool_split_video = False
-bool_in_pause = False
-bool_wait_for_split = False
 bool_is_recording = False
 bool_start_record = False
-frame_wait_for_split = 0
-frame_pause = 0
-BOOL_WRITE_VIDEO = False
 
 limit_ratio_red_blue = 0.99
-
-array_red_blue = np.zeros(250)
 
 while True:
     ret, frame = cap.read()
@@ -82,7 +71,6 @@ while True:
     blue = frame[:,:,2]
 
     ratio_red_on_blue = np.sum(red)/np.sum(blue)
-    array_red_blue[frame_number] = ratio_red_on_blue
 
     if ratio_red_on_blue > limit_ratio_red_blue:
         # Pause
@@ -92,31 +80,24 @@ while True:
             bool_start_record = True
             bool_is_recording = True
 
-    if BOOL_WRITE_VIDEO:
-        if bool_start_record:
-            bool_start_record = False
-            video = cv2.VideoWriter(
-                os.path.join(PATH_VIDEOS, f"{str(video_number)}_{LIST_WORDS[video_number]}.avi"),
-                cv2.VideoWriter_fourcc(*'XVID'),
-                fps,
-                (width, height)
-            )
-            video_number += 1
+    if bool_start_record:
+        bool_start_record = False
+        video = cv2.VideoWriter(
+            os.path.join(PATH_VIDEOS, f"{str(video_number)}_{LIST_WORDS[video_number]}.avi"),
+            cv2.VideoWriter_fourcc(*'XVID'),
+            fps,
+            (width, height)
+        )
+        video_number += 1
 
-        if bool_split_video:
-            bool_split_video = False
-            bool_is_recording = False
+    if bool_split_video:
+        bool_split_video = False
+        bool_is_recording = False
 
-            if video is not None:
-                video.release()
+        if video is not None:
+            video.release()
 
-        if bool_is_recording:
-            video.write(frame)
+    if bool_is_recording:
+        video.write(frame)
     
     frame_number += 1
-    
-    if not BOOL_WRITE_VIDEO and frame_number == 250:
-        break
-
-plt.plot(array_red_blue)
-plt.savefig("ratio_red_on_blue_250.png")

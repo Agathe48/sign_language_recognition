@@ -35,7 +35,7 @@ PATH_LIST_WORDS = PATH_DATASET + "list_words_video.txt"
 PATH_LIST_WORDS_CLEAN = PATH_DATASET + "list_words_video_clean.csv"
 PATH_FRAMES_VIDEO = PATH_DATASET + "frames_video/"
 
-PATH_ENGLISH_WORDS = PATH_DATASET + "english_words_10k.txt"
+PATH_ENGLISH_WORDS = PATH_DATASET + "english_words.txt"
 
 #################
 ### Constants ###
@@ -55,7 +55,7 @@ BATCH_SIZE = 32
 
 MODEL_NAME = "mobilenetv2" # mobilenetv2 cnn
 TRAIN_MODE = True
-NUMBER_EPOCHS = 15
+NUMBER_EPOCHS = 10
 BOOL_PREPROCESSING_CONTOURS = True
 BOOL_HSV = False
 BOOL_XYZ = False
