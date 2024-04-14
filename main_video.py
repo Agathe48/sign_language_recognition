@@ -6,7 +6,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from rembg import remove 
 
-
 ### Local imports ###
 
 from tools.tools_constants import (

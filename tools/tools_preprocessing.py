@@ -22,10 +22,7 @@ import numpy as np
 ### Local imports ###
 
 from tools.tools_constants import (
-    PATH_RAW_SHORT_TRAIN_DATASET,
-    PATH_TRAIN_DATASET,
-    PATH_TEST_DATASET,
-    PATH_RAW_TEST_DATASET
+    PATH_TEST_DATASET
 )
 
 #################
@@ -132,9 +129,3 @@ def extract_contours(train_images, validation_images):
 
     return np.array(canny_train_images), np.array(canny_val_images)
 
-
-if __name__ == "__main__":
-    remove_background(
-        folder_path=PATH_RAW_TEST_DATASET,
-        folder_destination=PATH_TEST_DATASET,
-        file_mode=True)
