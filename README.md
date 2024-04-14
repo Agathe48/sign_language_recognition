@@ -90,3 +90,7 @@ MobileNetV2, 10 époques, sans contours, HSV : 51% d'accuracy, 76% d'accuracy su
 
 
 CNN, 3 époques, contours : 47% d'accuracy, 69% d'accuracy sur 3
+
+Résultats sur la vidéo :
+MobileNetV2, 8 époques, contours, anciens datasets : 95 mots bien retrouvés sur 295
+[10, 5, 9, 1, 8, 2, 5, 1, 6, 9, 1, 1, 3, 1, 1, 2, 1, 9, 1, 2, 2, 6, 3, 9, 5, 2, 3, 5, 2, 5, 1, 3, 10, 1, 3, 2, 5, 3, 2, 1, 3, 5, 5, 8, 10, 2, 5, 6, 1, 3, 2, 1, 1, 2, 1, 8, 10, 6, 2, 1, 4, 1, 1, 6, 1, 1, 3, 1, 7, 10, 2, 1, 10, 1, 5, 8, 3, 7, 4, 1, 5, 1, 4, 3, 6, 6, 2, 1, 9, 5, 2, 10, 2, 6, 1]
