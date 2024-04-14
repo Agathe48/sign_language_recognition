@@ -1,3 +1,7 @@
+"""
+Python file to split the ASL video into 299 small videos for each word.
+"""
+
 ###############
 ### Imports ###
 ###############
@@ -7,7 +11,6 @@
 import cv2
 import numpy as np
 import os
-import matplotlib.pyplot as plt
 
 ### Local imports ###
 
@@ -16,16 +19,6 @@ from tools.tools_constants import (
     PATH_VIDEOS,
     LIST_WORDS
 )
-
-
-def calculhisto(I,color):
-    for i,col in enumerate(color):
-        histr = cv2.calcHist([I],[i],None,[256],[0,256])
-        plt.plot(histr,color = col)
-        plt.xlim([0,256])
-    plt.show()
-    
-    
 
 #################
 ### Main code ###
@@ -55,10 +48,12 @@ hand_disappeared = False
 video_number = 0
 video = None
 
+# Initialize the booleans for splitting the video
 bool_split_video = False
 bool_is_recording = False
 bool_start_record = False
 
+# Set the separating ratio between the number of red pixels and blue ones
 limit_ratio_red_blue = 0.99
 
 while True:
@@ -67,19 +62,22 @@ while True:
     if not ret:
         break
 
+    # Isolate the red and blue channels
     red = frame[:,:,0]
     blue = frame[:,:,2]
 
+    # Compute the ratio between the number of red pixels and blue ones
     ratio_red_on_blue = np.sum(red)/np.sum(blue)
 
+    # Split video when the current ratio is above the reference
     if ratio_red_on_blue > limit_ratio_red_blue:
-        # Pause
         bool_split_video = True
     else:
         if not bool_is_recording:
             bool_start_record = True
             bool_is_recording = True
 
+    # Start to record the video and save it the dataset/video_words
     if bool_start_record:
         bool_start_record = False
         video = cv2.VideoWriter(
@@ -90,6 +88,7 @@ while True:
         )
         video_number += 1
 
+    # Finish the video
     if bool_split_video:
         bool_split_video = False
         bool_is_recording = False
@@ -97,6 +96,7 @@ while True:
         if video is not None:
             video.release()
 
+    # When recording, add the current frame
     if bool_is_recording:
         video.write(frame)
     

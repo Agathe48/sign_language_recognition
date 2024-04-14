@@ -87,7 +87,7 @@ python script_create_dataset.py
 
 To test our model on a real video, we downloaded this [video](https://www.youtube.com/watch?v=yizRk2CP9gs) containing 299 words of 5 letters realized with ASL.
 
-We created then a script to split the video to each word, using a threshold thanks to the hand disappearing from the screen. To get these videos, the user has to run the following command:
+We created then a script to split the video to each word, using a threshold thanks to the hand disappearing from the screen. This threshold corresponds to the ratio between the number of red pixels and the number of blue ones in the image, which is significantly different when the hand is disappearing from the screen. We chose 0.99 as threshold value for this ratio; this value has been determined thanks to the graph we traced at the beginning of the video. This graph can be found in `images/ratio_red_on_blue.png` (and `images/ratio_red_on_blue_250.png`); the abscissa corresponds to the number of frames and the ordinate to the ratio. Overall, to get these individual videos, the user has to run the following command:
 
 ```bash
 python script_split_video.py

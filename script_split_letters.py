@@ -1,5 +1,18 @@
+"""
+Python file to isolate the five letters for each video.
+"""
+
+###############
+### Imports ###
+###############
+
+### Python imports ###
+
 import cv2
 import os
+
+### Local imports ###
+
 from tools.tools_constants import (
     PATH_VIDEOS,
     PATH_LIST_WORDS_CLEAN,

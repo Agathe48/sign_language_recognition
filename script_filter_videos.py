@@ -1,3 +1,11 @@
+"""
+Python file to filter the videos by removing the words with j and z.
+"""
+
+###############
+### Imports ###
+###############
+
 ### Python imports ###
 
 import os

@@ -32,7 +32,7 @@ from tools.tools_metrics import (
 )
 from tools.tools_preprocessing import (
     canny_detector,
-    loadImage
+    load_image
 )
 
 #################
@@ -78,7 +78,7 @@ def predict_word(idx, word):
     
     for counter_letter in range(5):
         # Open image
-        image = loadImage(path_word_letters_images + f"{counter_letter}_{word[counter_letter]}.png", show = False)
+        image = load_image(path_word_letters_images + f"{counter_letter}_{word[counter_letter]}.png", show = False)
         
         width = image.shape[0]
         height = image.shape[1]
