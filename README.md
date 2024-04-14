@@ -69,6 +69,8 @@ MobileNetV2, 3 époques, sans contours, HSV, avec background : 16% d'accuracy, 3
 MobileNetV2, 3 époques, contours, HSV, avec background : 31% d'accuracy, 54% d'accuracy sur 3
 MobileNetV2, 3 époques, sans contours, avec background : 26% d'accuracy, 50% d'accuracy sur 3
 MobileNetV2, 3 époques, contours, avec background : 41% d'accuracy, 66% d'accuracy sur 3
+MobileNetV2, 3 époques, contours, XYZ: 64% d'accuracy, 85% d'accuracy sur 3
+MobileNetV2, 3 époques, contours, LAB: 61% d'accuracy, 81% d'accuracy sur 3
 
 MobileNetV2, 6 époques, contours : 69% d'accuracy, 88% d'accuracy sur 3
 
@@ -80,13 +82,15 @@ MobileNetV2, 8 époques, contours, HSV, avec background : 35% d'accuracy, 56% d'
 MobileNetV2, 8 époques, sans contours, HSV, avec background : 22% d'accuracy, 42% d'accuracy sur 3
 MobileNetV2, 8 époques, sans contours, avec background : 27% d'accuracy, 53% d'accuracy sur 3
 MobileNetV2, 8 époques, contours, avec background : 48% d'accuracy, 72% d'accuracy sur 3
+MobileNetV2, 8 époques, contours, XYZ: 70% d'accuracy, 87% d'accuracy sur 3
+MobileNetV2, 8 époques, contours, LAB: 66% d'accuracy, 86% d'accuracy sur 3
 
 MobileNetV2, 10 époques, contours : 70% d'accuracy, 88% d'accuracy sur 3
 MobileNetV2, 10 époques, contours, HSV : 64% d'accuracy, 83% d'accuracy sur 3
 MobileNetV2, 10 époques, sans contours, HSV : 51% d'accuracy, 76% d'accuracy sur 3
 
 
-
+CNN temps d'entraînement sur 3 époques : 35 minutes
 
 
 CNN, 3 époques, contours : 47% d'accuracy, 69% d'accuracy sur 3

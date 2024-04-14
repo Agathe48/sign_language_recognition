@@ -49,10 +49,12 @@ IMAGE_SIZE = (224, 224)
 BATCH_SIZE = 32
 
 MODEL_NAME = "mobilenetv2" # mobilenetv2 cnn
-TRAIN_MODE = False
-NUMBER_EPOCHS = 8
+TRAIN_MODE = True
+NUMBER_EPOCHS = 3
 BOOL_PREPROCESSING_CONTOURS = True
 BOOL_HSV = False
+BOOL_XYZ = False
+BOOL_LAB = True
 
 def get_5_words_list():
     five_words_list = []
