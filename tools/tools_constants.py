@@ -55,11 +55,11 @@ BATCH_SIZE = 32
 
 MODEL_NAME = "mobilenetv2" # mobilenetv2 cnn
 TRAIN_MODE = True
-NUMBER_EPOCHS = 3
+NUMBER_EPOCHS = 8
 BOOL_PREPROCESSING_CONTOURS = True
 BOOL_HSV = False
 BOOL_XYZ = False
-BOOL_LAB = True
+BOOL_LAB = False
 
 def get_5_words_list():
     five_words_list = []
