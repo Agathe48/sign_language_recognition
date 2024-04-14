@@ -76,7 +76,7 @@ def remove_background(folder_path, folder_destination, file_mode=True):
                 filename, extension = os.path.splitext(file)
                 output.save(folder_destination + filename + '.png')
 
-def canny_detector(img, min_threshold, max_threshold, edges = 5):
+def canny_detector(img, min_threshold = 40, max_threshold = 100, edges = 5):
     # contour detector
     img_canny = cv2.Canny(img, min_threshold, max_threshold, edges = edges)
     return img_canny

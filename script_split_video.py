@@ -17,6 +17,16 @@ from tools.tools_constants import (
     LIST_WORDS
 )
 
+
+def calculhisto(I,color):
+    for i,col in enumerate(color):
+        histr = cv2.calcHist([I],[i],None,[256],[0,256])
+        plt.plot(histr,color = col)
+        plt.xlim([0,256])
+    plt.show()
+    
+    
+
 #################
 ### Main code ###
 #################
@@ -56,6 +66,11 @@ bool_is_recording = False
 bool_start_record = False
 frame_wait_for_split = 0
 frame_pause = 0
+BOOL_WRITE_VIDEO = False
+
+limit_ratio_red_blue = 0.99
+
+array_red_blue = np.zeros(250)
 
 while True:
     ret, frame = cap.read()
@@ -63,66 +78,45 @@ while True:
     if not ret:
         break
 
-    # convert the frame to grayscale
-    frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    red = frame[:,:,0]
+    blue = frame[:,:,2]
 
-    # get the histogram of the frame
-    histogram = cv2.calcHist([frame_gray], [0], None, [255], [0, 255])
-    # get the number of pixels under the value of 125 in the histogram
-    number_pixel_under_125 = np.sum(histogram[:125])
+    ratio_red_on_blue = np.sum(red)/np.sum(blue)
+    array_red_blue[frame_number] = ratio_red_on_blue
 
-    if frame_number == 0:
-        reference_pause = number_pixel_under_125
-        print("Reference for pause", reference_pause)
-    
-    print(number_pixel_under_125)
-    if reference_pause * 0.95 <= number_pixel_under_125:
-        if video is not None:
-            bool_wait_for_split = True
-            print("yo")
+    if ratio_red_on_blue > limit_ratio_red_blue:
+        # Pause
+        bool_split_video = True
     else:
-        print("I want to start")
         if not bool_is_recording:
             bool_start_record = True
             bool_is_recording = True
 
-    if bool_start_record and not bool_in_pause:
-        print("I START RECORD")
-        bool_start_record = False
-        bool_in_pause = False
-        video = cv2.VideoWriter(
-            os.path.join(PATH_VIDEOS, f"{str(video_number)}_{LIST_WORDS[video_number]}.avi"),
-            cv2.VideoWriter_fourcc(*'XVID'),
-            fps,
-            (width, height)
-        )
-        video_number += 1
+    if BOOL_WRITE_VIDEO:
+        if bool_start_record:
+            bool_start_record = False
+            video = cv2.VideoWriter(
+                os.path.join(PATH_VIDEOS, f"{str(video_number)}_{LIST_WORDS[video_number]}.avi"),
+                cv2.VideoWriter_fourcc(*'XVID'),
+                fps,
+                (width, height)
+            )
+            video_number += 1
 
-    if bool_in_pause:
-        frame_pause += 1
-    if frame_pause >= 10:
-        bool_in_pause = False
-        frame_pause = 0
+        if bool_split_video:
+            bool_split_video = False
+            bool_is_recording = False
 
-    if bool_wait_for_split:
-        print("I want to stop")
-        frame_wait_for_split += 1
-    if frame_wait_for_split >= 10:
-        bool_split_video = True
-        frame_wait_for_split = 0
+            if video is not None:
+                video.release()
 
-    # if bool_split_video and bool_finish_pause:
-    if bool_split_video:
-        print("I stop")
-        bool_split_video = False
-        bool_wait_for_split = False
-        bool_is_recording = False
-        bool_in_pause = True
-
-        if video is not None:
-            video.release()
-
-    if bool_is_recording:
-        video.write(frame)
-
+        if bool_is_recording:
+            video.write(frame)
+    
     frame_number += 1
+    
+    if not BOOL_WRITE_VIDEO and frame_number == 250:
+        break
+
+plt.plot(array_red_blue)
+plt.savefig("ratio_red_on_blue_250.png")

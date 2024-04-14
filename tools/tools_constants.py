@@ -14,7 +14,7 @@ PATH_RAW_TRAIN_DATASET = PATH_DATASET + "asl_alphabet_train/"
 PATH_RAW_SHORT_TRAIN_DATASET = PATH_DATASET + "asl_alphabet_train_short/"
 PATH_RAW_TEST_DATASET = PATH_DATASET + "asl_alphabet_test/"
 
-BOOL_PREPROCESSING_BACKGROUND = False
+BOOL_PREPROCESSING_BACKGROUND = True
 if BOOL_PREPROCESSING_BACKGROUND:
     PATH_TRAIN_DATASET = PATH_DATASET + "train/"
     PATH_VALID_DATASET = PATH_DATASET + "valid/"
@@ -27,6 +27,9 @@ else:
 PATH_RAW_VIDEO = PATH_DATASET + "Finger_spelling_ASL.mp4"
 PATH_VIDEOS = PATH_DATASET + "video_words/"
 PATH_LIST_WORDS = PATH_DATASET + "list_words_video.txt"
+PATH_LIST_WORDS_CLEAN = PATH_DATASET + "list_words_video_clean.csv"
+
+PATH_FRAMES_VIDEO = PATH_DATASET + "frames_video/"
 
 #################
 ### Constants ###
@@ -45,7 +48,7 @@ IMAGE_SIZE = (224, 224)
 BATCH_SIZE = 32
 
 MODEL_NAME = "mobilenetv2" # mobilenetv2 cnn
-TRAIN_MODE = True
-NUMBER_EPOCHS = 3
+TRAIN_MODE = False
+NUMBER_EPOCHS = 8
 BOOL_PREPROCESSING_CONTOURS = True
 BOOL_HSV = False

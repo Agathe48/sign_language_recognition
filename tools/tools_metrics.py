@@ -36,6 +36,20 @@ def analyse_predictions(predictions, number_elements_to_take=3):
         predicted_labels.append(list_predicted_letters)
     return predicted_labels
 
+def analyse_predictions_probabilities(predictions, number_elements_to_take=3):
+    predicted_labels_with_probas = []
+
+    for prediction in predictions:
+        sorted_id = np.argsort(prediction)[::-1]
+        first_elements = sorted_id[:number_elements_to_take]
+        first_probas = prediction[first_elements]
+
+        list_predicted_letters = [LIST_LETTERS_STATIC[id] for id in first_elements]
+        predicted_labels_with_probas.append([
+            list_predicted_letters,
+            first_probas])
+    return predicted_labels_with_probas
+
 def compute_accuracy(predicted_labels, test_labels):
     score = 0
     for counter in range(len(test_labels)):
