@@ -97,11 +97,11 @@ def create_train_val_test_set():
                 test_images.append(new_image)
                 test_labels.append(label_image)
 
-    train_images = np.array(train_images, dtype="float") / 255.0
+    train_images = np.array(train_images, dtype=np.float16) / 255.0
     train_labels = np.array(train_labels)
-    val_images = np.array(val_images, dtype="float") / 255.0
+    val_images = np.array(val_images, dtype=np.float16) / 255.0
     val_labels = np.array(val_labels)
-    test_images = np.array(test_images, dtype="float") / 255.0
+    test_images = np.array(test_images, dtype=np.float16) / 255.0
     test_labels = np.array(test_labels)
 
     return train_images, train_labels, val_images, val_labels, test_images, test_labels
