@@ -137,6 +137,11 @@ MobileNetV2, 8 époques, contours, avec background : 48% d'accuracy, 72% d'accur
 MobileNetV2, 8 époques, contours, XYZ: 70% d'accuracy, 87% d'accuracy sur 3
 MobileNetV2, 8 époques, contours, LAB: 66% d'accuracy, 86% d'accuracy sur 3
 
+MobileNetV2, 8 époques, large dataset, contours, RGB: 67% d'accuracy, 88% d'accuracy sur 3
+MobileNetV2, 8 époques, large dataset, contours, HSV: 59% d'accuracy, 81% d'accuracy sur 3
+MobileNetV2, 8 époques, large dataset, contours, XYZ: 69% d'accuracy, 88% d'accuracy sur 3
+MobileNetV2, 8 époques, large dataset, contours, LAB: 64% d'accuracy, 85% d'accuracy sur 3
+
 MobileNetV2, 10 époques, contours : 70% d'accuracy, 88% d'accuracy sur 3
 MobileNetV2, 10 époques, contours, HSV : 64% d'accuracy, 83% d'accuracy sur 3
 MobileNetV2, 10 époques, sans contours, HSV : 51% d'accuracy, 76% d'accuracy sur 3

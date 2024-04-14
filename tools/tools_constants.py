@@ -59,7 +59,7 @@ NUMBER_EPOCHS = 10
 BOOL_PREPROCESSING_CONTOURS = True
 BOOL_HSV = False
 BOOL_XYZ = False
-BOOL_LAB = False
+BOOL_LAB = True
 
 def get_5_words_list():
     five_words_list = []
