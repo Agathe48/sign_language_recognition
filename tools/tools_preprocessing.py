@@ -22,7 +22,9 @@ import numpy as np
 ### Local imports ###
 
 from tools.tools_constants import (
-    PATH_TEST_DATASET
+    BOOL_HSV,
+    BOOL_LAB,
+    BOOL_XYZ
 )
 
 #################
@@ -45,8 +47,9 @@ def load_image(src, show = True):
     return rgb
 
 def gray_scale(img):
-    img_gray= cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-    return img_gray
+    if not BOOL_HSV and not BOOL_XYZ and not BOOL_LAB:
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    return img
 
 def calcul_histogram(I,color):
     for i,col in enumerate(color):

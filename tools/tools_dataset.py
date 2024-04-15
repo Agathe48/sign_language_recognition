@@ -8,6 +8,7 @@ Tools Python file to deal with the dataset.
 
 ### Python imports ###
 
+from ctypes.wintypes import BOOL
 import cv2
 import os
 import numpy as np

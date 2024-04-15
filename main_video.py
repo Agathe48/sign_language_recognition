@@ -21,7 +21,9 @@ from tools.tools_constants import (
     BOOL_HSV,
     PATH_FRAMES_VIDEO,
     PATH_LIST_WORDS_CLEAN,
-    IMAGE_SIZE
+    IMAGE_SIZE,
+    BOOL_LAB,
+    BOOL_XYZ
 )
 from tools.tools_models import (
     create_mobilenetv2,
@@ -44,13 +46,22 @@ if MODEL_NAME == "mobilenetv2":
 elif MODEL_NAME == "cnn":
     model = create_cnn()
 
-path_to_save = PATH_MODELS + MODEL_NAME + '/E'+ str(NUMBER_EPOCHS)
+BOOL_LARGE_DATASET = True
+if BOOL_LARGE_DATASET:
+    add = "New_"
+else:
+    add = ""
+path_to_save = PATH_MODELS + MODEL_NAME + '/' + add + 'E'+ str(NUMBER_EPOCHS)
 if not BOOL_PREPROCESSING_BACKGROUND:
     path_to_save += "_background"
 if BOOL_PREPROCESSING_CONTOURS:
     path_to_save += "_contours"
 if BOOL_HSV:
     path_to_save += "_hsv"
+if BOOL_LAB:
+    path_to_save += "_lab"
+if BOOL_XYZ:
+    path_to_save += "_xyz"
 model.load_weights(path_to_save + "/")
 
 def predict_word_with_proba(proba_array, letters_array, nb_words_to_keep):

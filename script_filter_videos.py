@@ -22,6 +22,7 @@ from tools.tools_constants import (
 def clean_videos_with_z_and_j():
     with open(PATH_LIST_WORDS_CLEAN,"w") as file:
         for idx,word in enumerate(LIST_WORDS):
+            print(f"Processing {idx} {word}")
             save = True
             for letter in word:
                 if not letter.upper() in LIST_LETTERS_STATIC:
