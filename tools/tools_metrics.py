@@ -26,6 +26,21 @@ from tools.tools_constants import (
 #################
 
 def analyse_predictions(predictions, number_elements_to_take=3):
+    """
+    Get the predicted labels from the predictions.
+
+    Parameters
+    ----------
+    predictions : np.array
+        Predictions of the model
+    number_elements_to_take : int
+        Number of elements to take in the prediction
+
+    Returns
+    -------
+    predicted_labels : list
+        List of the predicted labels
+    """
     predicted_labels = []
 
     for prediction in predictions:
@@ -37,6 +52,23 @@ def analyse_predictions(predictions, number_elements_to_take=3):
     return predicted_labels
 
 def analyse_predictions_probabilities(prediction, number_elements_to_take=3):
+    """
+    Get the predicted labels from the predictions.
+
+    Parameters
+    ----------
+    predictions : np.array
+        Predictions of the model
+    number_elements_to_take : int
+        Number of elements to take in the prediction
+    
+    Returns
+    -------
+    list_predicted_letters : list
+        List of the predicted labels
+    first_probas : list
+        List of the probabilities of the predicted labels
+    """
     sorted_id = np.argsort(prediction)[::-1]
     first_elements = sorted_id[:number_elements_to_take]
     first_probas = prediction[first_elements]
@@ -44,6 +76,21 @@ def analyse_predictions_probabilities(prediction, number_elements_to_take=3):
     return list_predicted_letters, first_probas
 
 def compute_accuracy(predicted_labels, test_labels):
+    """
+    Compute the accuracy of the model.
+    
+    Parameters
+    ----------
+    predicted_labels : list
+        List of the predicted labels
+    test_labels : list
+        List of the test labels
+    
+    Returns
+    -------
+    accuracy : float
+        Accuracy of the model
+    """
     score = 0
     for counter in range(len(test_labels)):
         label_image = test_labels[counter]
@@ -58,6 +105,22 @@ def compute_accuracy(predicted_labels, test_labels):
     return accuracy
 
 def display_confusion_matrix(predicted_labels, test_labels, path_to_save):
+    """
+    Display the confusion matrix of the model.
+
+    Parameters
+    ----------
+    predicted_labels : list
+        List of the predicted labels
+    test_labels : list
+        List of the test labels
+    path_to_save : str
+        Path to save the confusion matrix
+    
+    Returns
+    -------
+    None
+    """
     test_types = [LIST_LETTERS_STATIC[
         np.argwhere(label_image == 1)[0][0]] for label_image in test_labels]
     confusion_matrix = metrics.confusion_matrix(test_types, predicted_labels)
@@ -73,6 +136,20 @@ def display_confusion_matrix(predicted_labels, test_labels, path_to_save):
     plt.savefig(path_to_save)
 
 def display_training_accuracy(model_history, path_to_save):
+    """
+    Display the training accuracy of the model.
+
+    Parameters
+    ----------
+    model_history : dict
+        History of the model
+    path_to_save : str
+        Path to save the accuracy plot
+    
+    Returns
+    -------
+    None
+    """
     plt.plot(model_history['accuracy'])
     plt.plot(model_history['val_accuracy'])
     plt.title('MobileNetV2 Accuracy')

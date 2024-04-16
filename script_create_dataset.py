@@ -58,6 +58,18 @@ if not isExist:
 ### Attribute to train, valid or test ###
 
 def choose_train_valid_test():
+    """
+    Choose the folder to put the image.
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    path : str
+        Path of the folder to put the image
+    """
     # Train or valid
     if rd.random() <= 0.8:
         # Train

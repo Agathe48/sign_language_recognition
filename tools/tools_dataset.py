@@ -8,6 +8,7 @@ Tools Python file to deal with the dataset.
 
 ### Python imports ###
 
+from ctypes.wintypes import BOOL
 import cv2
 import os
 import numpy as np
@@ -28,7 +29,7 @@ from tools.tools_constants import (
     BOOL_LAB
 )
 from tools.tools_preprocessing import (
-    cv2_extract_contours
+    canny_detector
 )
 
 #################
@@ -37,6 +38,22 @@ from tools.tools_preprocessing import (
 
 # Create a train and validation set image per image without going through tensorflow dataset
 def create_train_val_test_set():
+    """
+    Create the train, validation and test set.
+
+    Parameters
+    ----------
+    None 
+    
+    Returns
+    -------
+    train_images : np.array
+    train_labels : np.array
+    val_images : np.array
+    val_labels : np.array
+    test_images : np.array
+    test_labels : np.array
+    """
     train_images = []
     train_labels = []
     val_images = []
@@ -81,7 +98,7 @@ def create_train_val_test_set():
 
                 # Convert the image to gray
                 if BOOL_PREPROCESSING_CONTOURS:
-                    image = cv2_extract_contours(image)
+                    image = canny_detector(image)
                     
                     new_image = np.zeros((224, 224, 3))
                     for i in range(3):

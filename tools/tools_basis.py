@@ -25,7 +25,7 @@ def load_json_file(file_path: str) -> dict:
 
     Returns
     -------
-    dict
+    res : dict
         Content of the json file
     """
     with open(file_path, "r", encoding="utf-8") as file:
@@ -40,7 +40,6 @@ def save_json_file(file_path: str, dict_to_save: dict) -> None:
     ----------
     file_path : str
         Path of the json file
-
     dict_to_save : dict
         Dictionary to save
 

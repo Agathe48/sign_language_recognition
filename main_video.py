@@ -21,7 +21,9 @@ from tools.tools_constants import (
     BOOL_HSV,
     PATH_FRAMES_VIDEO,
     PATH_LIST_WORDS_CLEAN,
-    IMAGE_SIZE
+    IMAGE_SIZE,
+    BOOL_LAB,
+    BOOL_XYZ
 )
 from tools.tools_models import (
     create_mobilenetv2,
@@ -44,16 +46,44 @@ if MODEL_NAME == "mobilenetv2":
 elif MODEL_NAME == "cnn":
     model = create_cnn()
 
-path_to_save = PATH_MODELS + MODEL_NAME + '/E'+ str(NUMBER_EPOCHS)
+BOOL_LARGE_DATASET = True
+if BOOL_LARGE_DATASET:
+    add = "New_"
+else:
+    add = ""
+path_to_save = PATH_MODELS + MODEL_NAME + '/' + add + 'E'+ str(NUMBER_EPOCHS)
 if not BOOL_PREPROCESSING_BACKGROUND:
     path_to_save += "_background"
 if BOOL_PREPROCESSING_CONTOURS:
     path_to_save += "_contours"
 if BOOL_HSV:
     path_to_save += "_hsv"
+if BOOL_LAB:
+    path_to_save += "_lab"
+if BOOL_XYZ:
+    path_to_save += "_xyz"
 model.load_weights(path_to_save + "/")
 
 def predict_word_with_proba(proba_array, letters_array, nb_words_to_keep):
+    """
+    Predict the word with the probabilities of the letters.
+
+    Parameters
+    ----------
+    proba_array : np.array
+        Array of probabilities of the letters
+    letters_array : list
+        List of letters
+    nb_words_to_keep : int
+        Number of words to keep
+    
+    Returns
+    -------
+    best_words : list
+        List of the best words
+    best_scores : list
+        List of the scores of the best words
+    """
     score_array = np.zeros(len(FIVE_LETTERS_WORDS_LIST))
     for i in range(len(proba_array)): # ID de la lettre
         for j in range(len(proba_array[0])): # Rang de probabilité
@@ -70,9 +100,24 @@ def predict_word_with_proba(proba_array, letters_array, nb_words_to_keep):
 
 
 def predict_word(idx, word):
+    """
+    Predict the word.
+
+    Parameters
+    ----------
+    idx : int
+        Index of the word
+    word : str
+        Word to predict
+    
+    Returns
+    -------
+    best_words : list
+        List of the best words
+    """
     print("NEW WORD", word)
 
-    path_word_letters_images = PATH_FRAMES_VIDEO + "offset_3_time_reduce_87/" + str(idx) + "_" + word + "/"
+    path_word_letters_images = PATH_FRAMES_VIDEO + str(idx) + "_" + word + "/"
     list_predicted_letters = []
     list_predicted_probas = []
     
@@ -117,6 +162,7 @@ def predict_word(idx, word):
 
 score_words = 0
 list_index_words_predicted = []
+list_words_predicted = []
 
 with open(PATH_LIST_WORDS_CLEAN,"r") as file:
     for line in tqdm.tqdm(file):
@@ -127,6 +173,8 @@ with open(PATH_LIST_WORDS_CLEAN,"r") as file:
             print("\n", "--- VICTOIRE", word, best_words, best_scores, "\n")
             score_words += 1
             list_index_words_predicted.append(best_words.index(word) + 1)
+            list_words_predicted.append(word)
 
 print(score_words)
 print(list_index_words_predicted)
+print(list_words_predicted)

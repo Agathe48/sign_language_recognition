@@ -24,6 +24,19 @@ from tools.tools_constants import (
 #################
 
 def create_mobilenetv2(number_classes=len(LIST_LETTERS_STATIC)):
+    """
+    Create a model based on MobileNetV2.
+
+    Parameters
+    ----------
+    number_classes : int
+        Number of classes to predict
+    
+    Returns
+    -------
+    model : tf.keras.Model
+        Model based on MobileNetV2
+    """
     mobilenet_v2 = "https://tfhub.dev/google/tf2-preview/mobilenet_v2/feature_vector/4"
     input_shape = (224, 224, 3)
     mobile_net_layers = hub.KerasLayer(
@@ -47,6 +60,19 @@ def create_mobilenetv2(number_classes=len(LIST_LETTERS_STATIC)):
     return model
 
 def create_cnn(number_classes=len(LIST_LETTERS_STATIC)):
+    """
+    Create a CNN model.
+
+    Parameters
+    ----------
+    number_classes : int
+        Number of classes to predict
+    
+    Returns
+    -------
+    model : tf.keras.Model
+        CNN model
+    """
     model=Sequential()
     model.add(Conv2D(128,kernel_size=(5,5),
                     strides=1,padding='same',activation='relu',input_shape=(224,224,3)))
