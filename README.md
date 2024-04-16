@@ -1,5 +1,7 @@
 # Sign language recognition
 
+This project report is the `Project_report_Martin_Plu.pdf` file.
+
 ## Table of contents
 
 - [Sign language recognition](#sign-language-recognition)
