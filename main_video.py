@@ -128,6 +128,7 @@ def predict_word(idx, word):
 
 score_words = 0
 list_index_words_predicted = []
+list_words_predicted = []
 
 with open(PATH_LIST_WORDS_CLEAN,"r") as file:
     for line in tqdm.tqdm(file):
@@ -138,6 +139,8 @@ with open(PATH_LIST_WORDS_CLEAN,"r") as file:
             print("\n", "--- VICTOIRE", word, best_words, best_scores, "\n")
             score_words += 1
             list_index_words_predicted.append(best_words.index(word) + 1)
+            list_words_predicted.append(word)
 
 print(score_words)
 print(list_index_words_predicted)
+print(list_words_predicted)

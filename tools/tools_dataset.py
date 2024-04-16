@@ -29,7 +29,7 @@ from tools.tools_constants import (
     BOOL_LAB
 )
 from tools.tools_preprocessing import (
-    cv2_extract_contours
+    canny_detector
 )
 
 #################
@@ -82,7 +82,7 @@ def create_train_val_test_set():
 
                 # Convert the image to gray
                 if BOOL_PREPROCESSING_CONTOURS:
-                    image = cv2_extract_contours(image)
+                    image = canny_detector(image)
                     
                     new_image = np.zeros((224, 224, 3))
                     for i in range(3):

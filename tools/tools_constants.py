@@ -58,7 +58,7 @@ TRAIN_MODE = True
 NUMBER_EPOCHS = 15
 BOOL_PREPROCESSING_CONTOURS = True
 BOOL_HSV = False
-BOOL_XYZ = True
+BOOL_XYZ = False
 BOOL_LAB = False
 
 def get_5_words_list():

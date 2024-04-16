@@ -46,11 +46,6 @@ def load_image(src, show = True):
         plt.show()
     return rgb
 
-def gray_scale(img):
-    if not BOOL_HSV and not BOOL_XYZ and not BOOL_LAB:
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    return img
-
 def calcul_histogram(I,color):
     for i,col in enumerate(color):
         histr = cv2.calcHist([I],[i],None,[256],[0,256])
@@ -110,32 +105,17 @@ def plot_canny_img(img, img_canny):
     plt.title('OpenCv Canny'), plt.xticks([]), plt.yticks([])
     plt.show()
 
-def cv2_extract_contours(image):
-    image = gray_scale(image)
-    image = canny_detector(image, min_threshold = 40, max_threshold = 100)
-    return image
-
 def extract_contours(train_images, validation_images):
     """
     Preprocessing pipeline to extract contours from an image.
     """
-    # gray dataset
-    # gray_train_set = train_set.map(lambda x, y: (gray_scale(cv2.cvtColor(np.array(x, dtype="uint8")), cv2.COLOR_BGR2RGB), y))
-    # gray_val_set = validation_set.map(lambda x, y: (gray_scale(cv2.cvtColor(np.array(x, dtype="uint8")), cv2.COLOR_BGR2RGB), y))
-    # canny dataset
-    # canny_train_set = gray_train_set.map(lambda x, y: (canny_detector(img = x, min_threshold = 40, max_threshold = 100), y))
-    # canny_val_set = gray_val_set.map(lambda x, y: (canny_detector(img = x, min_threshold = 40, max_threshold = 100), y))
-
-    # canny_train_set = train_set.map(lambda x, y: (canny_detector(img = x.numpy(), min_threshold = 40, max_threshold = 100), y))
-    # canny_val_set = validation_set.map(lambda x, y: (canny_detector(img = x.numpy(), min_threshold = 40, max_threshold = 100), y))  
-
     canny_train_images = []
     canny_val_images = []
 
     for element in tqdm(train_images):
-        canny_train_images.append(cv2_extract_contours(element))
+        canny_train_images.append(canny_detector(element))
     for element in tqdm(validation_images):
-        canny_val_images.append(cv2_extract_contours(element))
+        canny_val_images.append(canny_detector(element))
 
     return np.array(canny_train_images), np.array(canny_val_images)
 
