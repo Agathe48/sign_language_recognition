@@ -117,7 +117,7 @@ def predict_word(idx, word):
     """
     print("NEW WORD", word)
 
-    path_word_letters_images = PATH_FRAMES_VIDEO + "offset_3_time_reduce_87/" + str(idx) + "_" + word + "/"
+    path_word_letters_images = PATH_FRAMES_VIDEO + str(idx) + "_" + word + "/"
     list_predicted_letters = []
     list_predicted_probas = []
     
