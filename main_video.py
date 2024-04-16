@@ -65,6 +65,25 @@ if BOOL_XYZ:
 model.load_weights(path_to_save + "/")
 
 def predict_word_with_proba(proba_array, letters_array, nb_words_to_keep):
+    """
+    Predict the word with the probabilities of the letters.
+
+    Parameters
+    ----------
+    proba_array : np.array
+        Array of probabilities of the letters
+    letters_array : list
+        List of letters
+    nb_words_to_keep : int
+        Number of words to keep
+    
+    Returns
+    -------
+    best_words : list
+        List of the best words
+    best_scores : list
+        List of the scores of the best words
+    """
     score_array = np.zeros(len(FIVE_LETTERS_WORDS_LIST))
     for i in range(len(proba_array)): # ID de la lettre
         for j in range(len(proba_array[0])): # Rang de probabilité
@@ -81,6 +100,21 @@ def predict_word_with_proba(proba_array, letters_array, nb_words_to_keep):
 
 
 def predict_word(idx, word):
+    """
+    Predict the word.
+
+    Parameters
+    ----------
+    idx : int
+        Index of the word
+    word : str
+        Word to predict
+    
+    Returns
+    -------
+    best_words : list
+        List of the best words
+    """
     print("NEW WORD", word)
 
     path_word_letters_images = PATH_FRAMES_VIDEO + "offset_3_time_reduce_87/" + str(idx) + "_" + word + "/"

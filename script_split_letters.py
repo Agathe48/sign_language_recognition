@@ -27,6 +27,20 @@ if not os.path.exists(PATH_FRAMES_VIDEO_SUBFOLDER):
     os.mkdir(PATH_FRAMES_VIDEO_SUBFOLDER)
 
 def split_video_word_on_letters(idx,word):
+    """
+    Split the video word on the letters.
+
+    Parameters
+    ----------
+    idx : int
+        Index of the video
+    word : str
+        Word of the video
+    
+    Returns
+    -------
+    None
+    """
     
     # Load the video
     cap = cv2.VideoCapture(PATH_VIDEOS + f"{str(idx)}_{word}.avi")
@@ -59,6 +73,18 @@ def split_video_word_on_letters(idx,word):
             letter_id += 1
         
 def split_letters_for_videos_in_csv(path_csv):
+    """
+    Split the letters for the videos in the csv.
+
+    Parameters
+    ----------
+    path_csv : str
+        Path of the csv
+    
+    Returns
+    -------
+    None
+    """
     with open(path_csv,"r") as file:
         for line in file:
             idx,word = line.replace("\n","").split(",")

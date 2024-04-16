@@ -38,6 +38,22 @@ from tools.tools_preprocessing import (
 
 # Create a train and validation set image per image without going through tensorflow dataset
 def create_train_val_test_set():
+    """
+    Create the train, validation and test set.
+
+    Parameters
+    ----------
+    None 
+    
+    Returns
+    -------
+    train_images : np.array
+    train_labels : np.array
+    val_images : np.array
+    val_labels : np.array
+    test_images : np.array
+    test_labels : np.array
+    """
     train_images = []
     train_labels = []
     val_images = []

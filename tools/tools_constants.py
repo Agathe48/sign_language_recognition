@@ -62,6 +62,17 @@ BOOL_XYZ = False
 BOOL_LAB = False
 
 def get_5_words_list():
+    """
+    Get the list of words with 5 letters.
+    Parameters
+    ----------
+    None 
+    
+    Returns
+    -------
+    five_words_list : list
+        List of words with 5 letters
+    """
     five_words_list = []
     with open(PATH_ENGLISH_WORDS,"r") as file:
         for line in file:
