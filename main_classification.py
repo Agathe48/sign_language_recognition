@@ -1,5 +1,5 @@
 """
-Main Python file to perform the sign language recognition.
+Main Python file to perform the training of the model for the ASL classification.
 """
 
 ###############
@@ -60,13 +60,7 @@ if MODEL_NAME == "mobilenetv2":
 elif MODEL_NAME == "cnn":
     model = create_cnn()
 
-BOOL_LARGE_DATASET = True
-if BOOL_LARGE_DATASET:
-    add = "New_"
-else:
-    add = ""
-
-path_to_save = PATH_MODELS + MODEL_NAME + '/' + add + 'E'+ str(NUMBER_EPOCHS)
+path_to_save = PATH_MODELS + MODEL_NAME + '/' + 'E'+ str(NUMBER_EPOCHS)
 if not BOOL_PREPROCESSING_BACKGROUND:
     path_to_save += "_background"
 if BOOL_PREPROCESSING_CONTOURS:

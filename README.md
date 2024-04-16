@@ -15,10 +15,18 @@
       - [Create the train, valid and test bases](#create-the-train-valid-and-test-bases)
     - [Obtain the test video for ASL recognition](#obtain-the-test-video-for-asl-recognition)
     - [Launch the main code](#launch-the-main-code)
+      - [Classification task of ASL static letters](#classification-task-of-asl-static-letters)
+      - [Spelled words recognition in the video](#spelled-words-recognition-in-the-video)
   - [Architecture of this project](#architecture-of-this-project)
   - [Results](#results)
 
 ## Introduction
+
+In this project, we undertook a thorough investigation into American Sign Language (ASL) with the overarching aim of developing a system capable of recognizing spelled words within video content.
+
+We followed a two steps method, the first one being a classification task over the 24 static letters of ASL, the second one being the word recognition. We delved into the exploration of various vision preprocessing methodologies, including the utilization of different color spaces, outline detection techniques, and background removal procedures. These preprocessing steps were then integrated with advanced neural network architectures for classification such as MobileNetV2 and CNN.
+
+We achieved a commendable 70% accuracy on the test set and, despite the inherent complexities, our system's performance remained robust even when applied to video data, with a respectable 42% accuracy in retrieving words.
 
 ## Utilization
 
@@ -87,7 +95,11 @@ python script_create_dataset.py
 
 To test our model on a real video, we downloaded this [video](https://www.youtube.com/watch?v=yizRk2CP9gs) containing 299 words of 5 letters realized with ASL.
 
-We created then a script to split the video to each word, using a threshold thanks to the hand disappearing from the screen. This threshold corresponds to the ratio between the number of red pixels and the number of blue ones in the image, which is significantly different when the hand is disappearing from the screen. We chose 0.99 as threshold value for this ratio; this value has been determined thanks to the graph we traced at the beginning of the video. This graph can be found in `images/ratio_red_on_blue.png` (and `images/ratio_red_on_blue_250.png`); the abscissa corresponds to the number of frames and the ordinate to the ratio. Overall, to get these individual videos, the user has to run the following command:
+We created then a script to split the video to each word, using a threshold thanks to the hand disappearing from the screen. This threshold corresponds to the ratio between the number of red pixels and the number of blue ones in the image, which is significantly different when the hand is disappearing from the screen. We chose 0.99 as threshold value for this ratio; this value has been determined thanks to the graph we traced at the beginning of the video. This graph can be found in `images/ratio_red_on_blue.png` (and `images/ratio_red_on_blue_250.png`); the abscissa corresponds to the number of frames and the ordinate to the ratio. 
+
+![Graph of the ratio red on blue](images/ratio_red_on_blue.png)
+
+Overall, to get these individual videos, the user has to run the following command:
 
 ```bash
 python script_split_video.py
@@ -109,8 +121,38 @@ python script_split_letters.py
 
 ### Launch the main code
 
+#### Classification task of ASL static letters
+
+The first part of the project with the training of the model on a special configuration can be launched using the *Python* file `main_classification.py` and configured with the file `tools_constants.py` contained in the folder `tools/`.
+
+First, the user can choose which model he wants to use between MobileNetV2 and the custom CNN by changing the value of the variable `MODEL_NAME`. It can then choose the number of epochs by setting the value of `NUMBER_EPOCHS`. The boolean constant `TRAIN_MODE` permits to enable the training of the model or only its execution when already trained.
+
+The preprocessing steps can be activated with the following boolean constants:
+- `BOOL_PREPROCESSING_BACKGROUND`, set to *True* to remove the background of the images
+- `BOOL_PREPROCESSING_CONTOURS`, set to *True* to detect the outlines of the images
+- `BOOL_HSV`, `BOOL_XYZ` and `BOOL_LAB`, one of them set to *True* to activate this corresponding color space. Otherwise, the images will be left in RGB. 
+
+#### Spelled words recognition in the video
+
+The second part of the project with the spelled words recognition in the video can be launched using the *Python* file `main_video.py`, after realizing the training of the desired model and having done all preprocessing steps of the video explained above. The configuration of the desired model can be realized as above in the file `tools_constants.py`.
+
 ## Architecture of this project
+
+This project contains several folders:
+- `dataset`, containing the different datasets, both for the classification task and the spelled word recognition.
+- `images`, containing keys images of our project.
+- `models`, containing the weights of the trained models.
+- `results`, containing the results for each model and configuration, with the accuracy graph over training and the confusion matrix. It also contains two files `summary_results.xlsx` and `video_results.md`, summarizing the results for both phases.
+- `tools`, containing several *Python* files with tools functions:
+  - `tools_basis.py`, with basic functions.
+  - `tools_constants.py`, with the main constants configuring the pipeline.
+  - `tools_dataset.py`, with the function to load the dataset and apply the preprocessing steps.
+  - `tools_metrics.py`, with our metrics.
+  - `tools_models.py`, with our two neural networks architectures.
+  - `tools_preprocessing.py`, with all our preprocessing functions.
 
 ## Results
 
-(dire qu'on a le rapport dans le dossier results)
+The *csv* file `summary_results.md` contained in the folder `results/` gives the details of the results achieved on the classification task on all our different configurations.
+
+The file `video_results.md` contained in the folder `results/` gives the details of the results achieved on the video.
